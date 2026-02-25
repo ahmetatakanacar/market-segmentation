@@ -18,16 +18,16 @@ This project is an unsupervised learning study that aims to divide a customer ba
 The main outputs and clustering graphs obtained from the project are as follows:
 
 ### 1. Balance and Purchases Distribution
-![Balance and Purchases](balance_purchases.png)
+![Balance and Purchases](images/balance_purchases.png)
 
 ### 2. Feature Correlation Matrix
-![Correlation Matrix](corr.png)
+![Correlation Matrix](images/corr.png)
 
 ### 3. Elbow Method
-![Elbow Method](elbow_method.png)
+![Elbow Method](images/elbow_method.png)
 
 ### 4. Customer Segmentation with PCA
-![PCA Clusters](pca1_pca2.png)
+![PCA Clusters](images/pca1_pca2.png)
 
 ```bash
 pip install pandas numpy matplotlib seaborn scikit-learn
