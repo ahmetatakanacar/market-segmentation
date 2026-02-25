@@ -3,6 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans
+from sklearn.decomposition import PCA
 
 df = pd.read_csv("data.csv")
 
@@ -38,3 +40,33 @@ df_scaled = scaler.fit_transform(df)
 
 df_scaled = pd.DataFrame(df_scaled, columns=df.columns)
 df_scaled.head()
+
+wcss = []
+for i in range(1, 11):
+    kmeans = KMeans(n_clusters=i, init="k-means++", n_init=10, random_state=42)
+    kmeans.fit(df_scaled)
+    wcss.append(kmeans.inertia_)
+
+plt.figure(figsize=(10, 6))
+plt.plot(range(1, 11), wcss, marker="o",color="red")
+plt.title("Elbow Method")
+plt.ylabel("WCSS")
+plt.xticks(range(1,11))
+plt.show()
+
+kmeans = KMeans(n_clusters=4, init="k-means++", n_init=10, random_state=42)
+clusters = kmeans.fit_predict(df_scaled)
+
+df["Cluster"] = clusters
+df.head()
+
+pca = PCA(n_components=2)
+pca_data = pca.fit_transform(df_scaled)
+
+df_pca = pd.DataFrame(data=pca_data, columns=["PCA1", "PCA2"])
+df_pca["Cluster"] = clusters
+
+plt.figure(figsize=(10, 8))
+sns.scatterplot(x="PCA1", y="PCA2", hue="Cluster", data=df_pca, palette="Set2")
+plt.title("Customer Segmentation")
+plt.show()
